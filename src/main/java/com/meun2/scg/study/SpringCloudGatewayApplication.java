@@ -20,6 +20,10 @@ public class SpringCloudGatewayApplication {
 						.path("/get")
 						.filters(f -> f.addRequestHeader("Hello", "World"))
 						.uri("http://httpbin.org:80"))
+				.route(p -> p
+						.host("*.circuitbreaker.com")
+						.filters(f -> f.circuitBreaker(config -> config.setName("mycmd")))
+						.uri("http://httpbin.org:80"))
 				.build();
 	}
 }
